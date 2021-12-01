@@ -3,7 +3,13 @@ import sys
 from io import BytesIO, IOBase
 
 def main():
-    pass
+    with open("in.txt") as f:
+        data = [int(line) for line in f]
+    # part 1
+    print(sum(i < j for i, j in zip(data, data[1:])))
+    # part 2
+    three_measurements = [sum(data[i:i+3]) for i in range(len(data)-2)]
+    print(sum(i < j for i, j in zip(three_measurements, three_measurements[1:])))
 
 # region fastio
 
