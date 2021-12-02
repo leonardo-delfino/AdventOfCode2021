@@ -1,7 +1,6 @@
 import os
 import sys
 from io import BytesIO, IOBase
-import itertools as it
 
 def main():
     with open("in.txt") as f:
