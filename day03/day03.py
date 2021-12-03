@@ -2,6 +2,17 @@ import os
 import sys
 from io import BytesIO, IOBase
 
+def rating(data, position, bit="0"):
+    if len(data) == 1:
+        return data
+    position %= len(data[0])
+    bits_p = [line[position] for line in data]
+    return rating(
+        [line for line in data if line[position] == (
+            bit if bits_p.count("1") >= bits_p.count("0") else list({"0", "1"}.difference({bit}))[0]
+        )], position + 1, bit
+    )
+
 def main():
     with open("in.txt") as f:
         data = [line for line in f]
@@ -9,8 +20,13 @@ def main():
     # part 1
     gamma_bits = ["1" if p.count("1") > p.count("0") else "0" for p in zip(*data)]
     gamma = int("".join(gamma_bits), 2)
-    epsilon = int("1"*(len(data[0])-1), 2) ^ gamma
+    epsilon = gamma ^ int("1"*(len(data[0])-1), 2)
     print(gamma*epsilon)
+
+    # part 2
+    oxygen = int(rating(data, 0, "1")[0], 2)
+    co2 = int(rating(data, 0)[0], 2)
+    print(oxygen*co2)
 
 # region fastio
 
