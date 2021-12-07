@@ -1,27 +1,16 @@
 import os
 import sys
 from io import BytesIO, IOBase
-import numpy as np
-import pandas as pd
-
-def solve(days, data):
-    for _ in range(days):
-        data = np.roll(data, -1)
-        data[6] += data[8]
-    return sum(data)
+import statistics
 
 def main():
-    data = np.array(
-        [
-            list(
-                pd.read_csv("in.txt", header=None).to_numpy().reshape(-1)
-            ).count(i) for i in range(9)
-        ], dtype="int64"
-    )
+    with open("in.txt") as f:
+        data = [int(i) for i in f.read().split(",")]
     # part 1
-    print(solve(80, data))
+    print(sum([abs(i-int(statistics.median(data))) for i in data]))
     # part 2
-    print(solve(256, data))
+    mean = int(statistics.mean(data))
+    print(min(sum(abs(i-x) * (abs(i-x) + 1) / 2 for i in data) for x in range(mean, mean+1)))
 
 # region fastio
 
