@@ -1,17 +1,36 @@
 import os
 import sys
 from io import BytesIO, IOBase
+from itertools import permutations
+
+pattern = {
+    "abcefg": 0,
+    "cf": 1,
+    "acdeg": 2,
+    "acdfg": 3,
+    "bcdf": 4,
+    "abdfg": 5,
+    "abdefg": 6,
+    "acf": 7,
+    "abcdefg": 8,
+    "abcdfg": 9,
+}
 
 def main():
     with open("in.txt") as f:
-        data = [int(line) for line in f]
+        data = [[x.split(" ") for x in i.split(" | ")] for i in f.read().splitlines()]
 
     # part 1
-    print(sum(i < j for i, j in zip(data, data[1:])))
+    print(sum([len([x for x in line[1] if len(x) in [2, 3, 4, 7]]) for line in data]))
 
     # part 2
-    three_measurements = [sum(data[i:i+3]) for i in range(len(data)-2)]
-    print(sum(i < j for i, j in zip(three_measurements, three_measurements[1:])))
+    print(sum(v[0] for v in list([int("".join(str(pattern[code]) for code in
+                                              ["".join(
+                                                  sorted(x.translate(str.maketrans("abcdefg", "".join(permutation)))))
+                                               for x in line[1]])) for permutation in permutations("abcdefg") if all(
+        code in pattern for code in
+        ["".join(sorted(x.translate(str.maketrans("abcdefg", "".join(permutation))))) for x in line[0]])] for line in
+                                 data)))
 
 # region fastio
 

@@ -6,8 +6,10 @@ import statistics
 def main():
     with open("in.txt") as f:
         data = [int(i) for i in f.read().split(",")]
+
     # part 1
     print(sum([abs(i-int(statistics.median(data))) for i in data]))
+
     # part 2
     mean = int(statistics.mean(data))
     print(min(sum(abs(i-x) * (abs(i-x) + 1) / 2 for i in data) for x in range(mean, mean+1)))

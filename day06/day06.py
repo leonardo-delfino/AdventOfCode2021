@@ -18,8 +18,10 @@ def main():
             ).count(i) for i in range(9)
         ], dtype="int64"
     )
+
     # part 1
     print(solve(80, data))
+
     # part 2
     print(solve(256, data))
 

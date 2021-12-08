@@ -58,7 +58,9 @@ def main():
                 boards.append(b)
                 s = calculate_sum(table[b], draw)
                 if len(boards) == 1:
+                    # part 1
                     print(s)
+    # part 2
     print(s)
 
 # region fastio
