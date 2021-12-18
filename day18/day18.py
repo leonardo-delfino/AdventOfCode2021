@@ -52,8 +52,9 @@ def magnitude(num):
 def main():
     with open("in.txt") as f:
         data = [eval(line) for line in f.read().splitlines()]
-
+    # part 1
     print(magnitude(reduce(add, data)))
+    # part 2
     print(max(magnitude(add(a, b)) for a, b in itertools.permutations(data, 2)))
 
 # region fastio
